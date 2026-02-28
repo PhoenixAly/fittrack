@@ -25,6 +25,63 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
+        .hero-banner {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('http://akfisherhouse.com/sites/default/files/images/2385-fisherhouse_jber-2.banner.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 0;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(30, 58, 95, 0.7) 100%);
+            pointer-events: none;
+        }
+
+        .hero-banner-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
         .header-top {
             display: flex;
             justify-content: space-between;
@@ -56,7 +113,7 @@
         }
 
         nav {
-            background-color: #2d5a8c;
+            background-color: #8B4513;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
@@ -80,37 +137,61 @@
             padding: 1rem 1.5rem;
             transition: background-color 0.3s;
             border-bottom: 3px solid transparent;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
         nav a:hover {
-            background-color: #1e3a5f;
-            border-bottom-color: #ffc107;
+            background-color: #A0522D;
+            border-bottom-color: #FFD700;
         }
 
         nav a.active {
-            background-color: #1e3a5f;
-            border-bottom-color: #ffc107;
+            background-color: #A0522D;
+            border-bottom-color: #FFD700;
         }
 
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%231e3a5f" width="1200" height="400"/></svg>');
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('http://akfisherhouse.com/sites/default/files/images/2385-fisherhouse_jber-2.banner.jpg');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 4rem 2rem;
+            padding: 8rem 2rem;
             text-align: center;
-            margin: 2rem 0;
+            margin: 0;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(30, 58, 95, 0.8) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h2 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            font-weight: 900;
+            letter-spacing: 2px;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 800px;
             margin: 0 auto;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .container {
@@ -131,7 +212,7 @@
             color: #1e3a5f;
             margin-bottom: 1.5rem;
             font-size: 2rem;
-            border-bottom: 3px solid #ffc107;
+            border-bottom: 3px solid #8B4513;
             padding-bottom: 0.5rem;
         }
 
@@ -154,6 +235,7 @@
             padding: 1.5rem;
             border-radius: 8px;
             text-align: center;
+            border-top: 4px solid #8B4513;
         }
 
         .stat-box .number {
@@ -175,7 +257,7 @@
 
         .social-links a {
             display: inline-block;
-            background-color: #2d5a8c;
+            background-color: #8B4513;
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 5px;
@@ -185,7 +267,7 @@
         }
 
         .social-links a:hover {
-            background-color: #1e3a5f;
+            background-color: #A0522D;
             transform: translateY(-2px);
         }
 
@@ -199,7 +281,7 @@
         .info-card {
             background-color: #f9f9f9;
             padding: 1.5rem;
-            border-left: 4px solid #ffc107;
+            border-left: 4px solid #8B4513;
             border-radius: 4px;
         }
 
@@ -242,8 +324,8 @@
 
         .cta-button {
             display: inline-block;
-            background-color: #ffc107;
-            color: #1e3a5f;
+            background-color: #FFD700;
+            color: #8B4513;
             padding: 1rem 2rem;
             border-radius: 5px;
             text-decoration: none;
@@ -252,10 +334,11 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            text-transform: uppercase;
         }
 
         .cta-button:hover {
-            background-color: #ffb300;
+            background-color: #FFA500;
             transform: translateY(-2px);
         }
 
@@ -266,10 +349,11 @@
             padding: 2rem;
             margin-top: 2rem;
             font-size: 0.9rem;
+            border-top: 5px solid #8B4513;
         }
 
         footer a {
-            color: #ffc107;
+            color: #FFD700;
             text-decoration: none;
         }
 
@@ -351,10 +435,12 @@
         </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Background Mountains -->
     <div class="hero">
-        <h2>Welcome to Alaska Fisher House</h2>
-        <p>Providing compassionate support and a warm home away from home for service members, veterans, and their families during their time of need in the Anchorage area.</p>
+        <div class="hero-content">
+            <h2>🇺🇸 Welcome to Alaska Fisher House 🇺🇸</h2>
+            <p>A Proud Home Away From Home for America's Military Families</p>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -383,6 +469,18 @@
             </div>
             <div style="margin-top: 1.5rem;">
                 <a href="contact.html" class="cta-button">Send Email</a>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        <section id="gallery">
+            <h2>🏠 Tour Our Facilities</h2>
+            <p>The Alaska Fisher House provides comfortable, welcoming accommodations for military families:</p>
+            <div class="image-gallery">
+                <img src="http://akfisherhouse.com/sites/default/files/images/12.2011_fha_kitchen.banner.jpg" alt="Fisher House Kitchen" class="gallery-image">
+                <img src="http://akfisherhouse.com/sites/default/files/images/111222-f-ke165-010.banner.jpg" alt="Fisher House Dining Room" class="gallery-image">
+                <img src="http://akfisherhouse.com/sites/default/files/images/12.2011_fha_bedroom.banner.jpg" alt="Fisher House Bedroom" class="gallery-image">
+                <img src="http://akfisherhouse.com/sites/default/files/images/2385-fisherhouse_jber-2.banner.jpg" alt="Fisher House of Alaska" class="gallery-image">
             </div>
         </section>
 
