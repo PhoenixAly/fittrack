@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Supporters - Alaska Fisher House</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section h1 {
+            font-size: 28px;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .contact-info p {
+            margin: 0.3rem 0;
+        }
+
+        .contact-info strong {
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        nav {
+            background-color: #2d5a8c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: #1e3a5f;
+            border-bottom-color: #ffc107;
+        }
+
+        nav a.active {
+            background-color: #1e3a5f;
+            border-bottom-color: #ffc107;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: #1e3a5f;
+            margin: 2rem 0 1rem 0;
+            font-size: 1.8rem;
+            border-left: 4px solid #ffc107;
+            padding-left: 1rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .supporters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .supporter-item {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-left: 3px solid #2d5a8c;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .supporter-item:hover {
+            background-color: #e8f4f8;
+        }
+
+        .supporter-item strong {
+            color: #1e3a5f;
+            display: block;
+        }
+
+        footer {
+            background-color: #1e3a5f;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav a {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                padding: 0.75rem 1.5rem;
+            }
+
+            nav a:hover, nav a.active {
+                border-left-color: #ffc107;
+                border-bottom: none;
+            }
+
+            .supporters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="logo-section">
+                <h1>🏠 Alaska Fisher House</h1>
+                <p>A Home Away From Home for Military Families</p>
+            </div>
+            <div class="contact-info">
+                <strong>Contact Us</strong>
+                <p>Office: <a href="tel:+19072221673" style="color: white; text-decoration: none;">(907) 222-1673</a></p>
+                <p>Emergency: <a href="tel:+19074449009" style="color: white; text-decoration: none;">(907) 444-9009</a></p>
+                <p>Fax: (907) 222-2498</p>
+                <p>Hours: Mon-Fri, 8:00 AM - 4:00 PM</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="fisher-house.html">FISHER HOUSE</a></li>
+            <li><a href="immediate-needs.html">IMMEDIATE NEEDS</a></li>
+            <li><a href="immediate-needs.html">HOW YOU CAN HELP</a></li>
+            <li><a href="our-supporters.html" class="active">SUPPORTERS</a></li>
+            <li><a href="fisher-house-board-of-directors.html">BOARD</a></li>
+            <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <section>
+            <h1>🤝 Our Supporters</h1>
+            
+            <p>The Alaska Fisher House would like to extend our deepest gratitude to the following organizations and individuals who have generously supported our mission. Their contributions enable us to continue providing a warm and compassionate home for military families during their time of need.</p>
+
+            <h2>🏢 Corporate & Organization Partners</h2>
+            
+            <div class="supporters-grid">
+                <div class="supporter-item"><strong>49th State Street Rodders</strong></div>
+                <div class="supporter-item"><strong>AFS Chapter 1473</strong></div>
+                <div class="supporter-item"><strong>Alaska Aces</strong></div>
+                <div class="supporter-item"><strong>Alaska Airlines</strong></div>
+                <div class="supporter-item"><strong>Alaska State Elks Association</strong></div>
+                <div class="supporter-item"><strong>Alaska USA Foundation</strong></div>
+                <div class="supporter-item"><strong>Alaska Warrior Hockey Team</strong></div>
+                <div class="supporter-item"><strong>American Legion Auxiliary Unit 28</strong></div>
+                <div class="supporter-item"><strong>AMVETS Post 49</strong></div>
+                <div class="supporter-item"><strong>Anchorage Daily News</strong></div>
+                <div class="supporter-item"><strong>Arctic Ram Corporation</strong></div>
+                <div class="supporter-item"><strong>Arctic Warrior</strong></div>
+                <div class="supporter-item"><strong>Armed Services YMCA</strong></div>
+                <div class="supporter-item"><strong>ASD Charitable Campaign</strong></div>
+                <div class="supporter-item"><strong>BMW of Anchorage</strong></div>
+                <div class="supporter-item"><strong>CIRI</strong></div>
+                <div class="supporter-item"><strong>Conoco Phillips</strong></div>
+                <div class="supporter-item"><strong>DAV Metro Chapter 7</strong></div>
+                <div class="supporter-item"><strong>Elmendorf Officer's Spouses Organization</strong></div>
+                <div class="supporter-item"><strong>First National Bank Alaska</strong></div>
+                <div class="supporter-item"><strong>GCI</strong></div>
+                <div class="supporter-item"><strong>Green Knights AK</strong></div>
+                <div class="supporter-item"><strong>Grouse Ridge Shooting Club</strong></div>
+                <div class="supporter-item"><strong>Hyundai of Anchorage</strong></div>
+                <div class="supporter-item"><strong>Jack Henry Post 1, American Legion</strong></div>
+                <div class="supporter-item"><strong>Kassik's Brewery</strong></div>
+                <div class="supporter-item"><strong>Key Bank</strong></div>
+                <div class="supporter-item"><strong>KIA Motors</strong></div>
+                <div class="supporter-item"><strong>Kirby of Eagle River</strong></div>
+                <div class="supporter-item"><strong>Kulis' First Sergeant Council</strong></div>
+                <div class="supporter-item"><strong>Lithia Chrysler Jeep Dodge of South Anchorage</strong></div>
+                <div class="supporter-item"><strong>Lynden</strong></div>
+                <div class="supporter-item"><strong>Mat-Su Miners</strong></div>
+                <div class="supporter-item"><strong>Military Order of the Purple Heart, Chapter 593</strong></div>
+                <div class="supporter-item"><strong>NIT</strong></div>
+                <div class="supporter-item"><strong>Office Max</strong></div>
+                <div class="supporter-item"><strong>Ohana Media Group</strong></div>
+                <div class="supporter-item"><strong>Pizza Man</strong></div>
+                <div class="supporter-item"><strong>Sacred Heart Parish</strong></div>
+                <div class="supporter-item"><strong>SAM's Club</strong></div>
+                <div class="supporter-item"><strong>St. Luke Lutheran Church</strong></div>
+                <div class="supporter-item"><strong>Surgical Care Affiliates</strong></div>
+                <div class="supporter-item"><strong>Texas Roadhouse Anchorage, AK - Muldoon Rd</strong></div>
+                <div class="supporter-item"><strong>Tikahtnu Commons McDonalds</strong></div>
+                <div class="supporter-item"><strong>UAA Community Campaign</strong></div>
+                <div class="supporter-item"><strong>Unique Machine</strong></div>
+                <div class="supporter-item"><strong>United Way</strong></div>
+                <div class="supporter-item"><strong>Virl "Pa" Haga VFW Post 10221</strong></div>
+                <div class="supporter-item"><strong>Wal-Mart</strong></div>
+                <div class="supporter-item"><strong>War Vets of Alaska</strong></div>
+                <div class="supporter-item"><strong>Wells Fargo</strong></div>
+            </div>
+
+            <h2>👥 Individual Donors</h2>
+            
+            <p>We are deeply grateful to the many generous individuals who have contributed their time, resources, and support to our mission:</p>
+
+            <div class="supporters-grid">
+                <div class="supporter-item"><strong>Betty Fuller</strong></div>
+                <div class="supporter-item"><strong>Chief Master Sgt. Gerald Murray</strong></div>
+                <div class="supporter-item"><strong>Christopher & Christy Dailey</strong></div>
+                <div class="supporter-item"><strong>David & Frieda Erickson</strong></div>
+                <div class="supporter-item"><strong>Dean & Judy McKenzie</strong></div>
+                <div class="supporter-item"><strong>Diane Courtney</strong></div>
+                <div class="supporter-item"><strong>Dr. Eli & Judy Powell</strong></div>
+                <div class="supporter-item"><strong>George & Brenda Wuerch</strong></div>
+                <div class="supporter-item"><strong>Hobo Jim</strong></div>
+                <div class="supporter-item"><strong>Jamilia George</strong></div>
+                <div class="supporter-item"><strong>Kent & Nancy Young</strong></div>
+                <div class="supporter-item"><strong>Leslie Courtney</strong></div>
+                <div class="supporter-item"><strong>Lyndon & Angelika Harder</strong></div>
+                <div class="supporter-item"><strong>Morton & Anne Plumb</strong></div>
+                <div class="supporter-item"><strong>Pam Bergeson</strong></div>
+                <div class="supporter-item"><strong>Pat & Linda Doyle</strong></div>
+                <div class="supporter-item"><strong>Rachel Saxby</strong></div>
+                <div class="supporter-item"><strong>Richard Scott - 1-40 Cav</strong></div>
+                <div class="supporter-item"><strong>Robert & Suzanne Evans</strong></div>
+                <div class="supporter-item"><strong>Roger Young</strong></div>
+                <div class="supporter-item"><strong>Ron Crowl</strong></div>
+                <div class="supporter-item"><strong>Ronald & Janice Siefker</strong></div>
+                <div class="supporter-item"><strong>Silvia Hall</strong></div>
+                <div class="supporter-item"><strong>Suzanne Cherot</strong></div>
+                <div class="supporter-item"><strong>Terry & Pattie Parks</strong></div>
+                <div class="supporter-item"><strong>Vicki Crown</strong></div>
+            </div>
+
+            <p style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #eee; font-style: italic; color: #555;">
+                If you would like to become a supporter of the Alaska Fisher House or make a donation, please visit our <a href="immediate-needs.html" style="color: #2d5a8c; font-weight: bold; text-decoration: underline;">Immediate Needs</a> page or <a href="contact.html" style="color: #2d5a8c; font-weight: bold; text-decoration: underline;">contact us</a> directly.
+            </p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2010 - 2026 Alaska Fisher House. All Rights Reserved.</p>
+        <p>Fisher House of Alaska is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status.</p>
+        <p>Site Design by <a href="http://web.geonorth.com/" target="_blank">GeoNorth, LLC</a></p>
+    </footer>
+</body>
+</html>

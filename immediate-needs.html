@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immediate Needs - Alaska Fisher House</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section h1 {
+            font-size: 28px;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .contact-info p {
+            margin: 0.3rem 0;
+        }
+
+        .contact-info strong {
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        nav {
+            background-color: #2d5a8c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: #1e3a5f;
+            border-bottom-color: #ffc107;
+        }
+
+        nav a.active {
+            background-color: #1e3a5f;
+            border-bottom-color: #ffc107;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #2d5a8c;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .item-category {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+
+        .item-category h4 {
+            color: #1e3a5f;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .item-category ul {
+            list-style-position: inside;
+            margin-left: 0;
+        }
+
+        .item-category li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .donation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .donation-box {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .donation-box h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .donation-box p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #1e3a5f;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 1rem 0;
+        }
+
+        .cta-button:hover {
+            background-color: #ffb300;
+            transform: translateY(-2px);
+        }
+
+        .info-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box strong {
+            color: #2e7d32;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+        }
+
+        footer {
+            background-color: #1e3a5f;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav a {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                padding: 0.75rem 1.5rem;
+            }
+
+            nav a:hover, nav a.active {
+                border-left-color: #ffc107;
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="logo-section">
+                <h1>🏠 Alaska Fisher House</h1>
+                <p>A Home Away From Home for Military Families</p>
+            </div>
+            <div class="contact-info">
+                <strong>Contact Us</strong>
+                <p>Office: <a href="tel:+19072221673" style="color: white; text-decoration: none;">(907) 222-1673</a></p>
+                <p>Emergency: <a href="tel:+19074449009" style="color: white; text-decoration: none;">(907) 444-9009</a></p>
+                <p>Fax: (907) 222-2498</p>
+                <p>Hours: Mon-Fri, 8:00 AM - 4:00 PM</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="fisher-house.html">FISHER HOUSE</a></li>
+            <li><a href="immediate-needs.html" class="active">IMMEDIATE NEEDS</a></li>
+            <li><a href="immediate-needs.html">HOW YOU CAN HELP</a></li>
+            <li><a href="our-supporters.html">SUPPORTERS</a></li>
+            <li><a href="fisher-house-board-of-directors.html">BOARD</a></li>
+            <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <section>
+            <h1>💝 Immediate Needs & How You Can Help</h1>
+
+            <p>The Alaska Fisher House relies on generous donations from individuals and organizations to support our military families during their time of need. Your contribution directly helps us provide essential items our guests require during their stay.</p>
+
+            <h2>💰 Make a Monetary Donation</h2>
+            
+            <div class="donation-options">
+                <div class="donation-box">
+                    <h4>Drop Off in Person</h4>
+                    <p>Cash, checks, or gift cards can be dropped off at our location during business hours.</p>
+                    <strong>Mon-Fri: 8:00 AM - 4:00 PM</strong>
+                </div>
+                
+                <div class="donation-box">
+                    <h4>Donate Online</h4>
+                    <p>Credit card donations available online through our secure donation portal.</p>
+                    <a href="https://engage.fisherhouse.org/site/Donation2;jsessionid=00000000.app261a?2435.donation=form1&df_id=2435&mfc_pref=T&NONCE_TOKEN=A38EEAC4EEEEFC90EDBB5B5D16C9A419" target="_blank" style="color: #ffc107; text-decoration: none; font-weight: bold;">Donate Online →</a>
+                </div>
+
+                <div class="donation-box">
+                    <h4>Mail a Check</h4>
+                    <p>Fisher House of Alaska Board of Directors<br>
+                    200 West 34th Avenue, Suite 29<br>
+                    Anchorage, AK 99503</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Important Note:</strong>
+                <p>All donations are tax deductible. Your donation is used to purchase items in direct support of our guests.</p>
+            </div>
+
+            <h2>🛒 Items We Need</h2>
+
+            <h3>Food & Beverage Items</h3>
+            <div class="items-grid">
+                <div class="item-category">
+                    <h4>📦 Pantry Staples</h4>
+                    <ul>
+                        <li>Bottled water</li>
+                        <li>Shelf-stable whole & 2% milk</li>
+                        <li>Canned soup</li>
+                        <li>Cereal</li>
+                        <li>Individually wrapped snacks:
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Crackers</li>
+                                <li>Chips</li>
+                                <li>Cookies</li>
+                                <li>Granola bars</li>
+                                <li>Slim Jims</li>
+                                <li>Jerky</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #d32f2f;"><strong>⚠️ Note:</strong> We cannot accept opened or expired food items.</p>
+                </div>
+            </div>
+
+            <h3>Personal Care & Hygiene</h3>
+            <div class="items-grid">
+                <div class="item-category">
+                    <h4>🧴 Toiletries & Personal Care</h4>
+                    <ul>
+                        <li>Travel-sized toiletries</li>
+                        <li>Q-tips</li>
+                        <li>Deodorant</li>
+                        <li>Mouthwash</li>
+                        <li>Dental floss</li>
+                        <li>Hair brushes and combs</li>
+                        <li>Hair ties and bobby pins</li>
+                        <li>Chapstick</li>
+                        <li>Tweezers</li>
+                        <li>Hair spray</li>
+                        <li>Hand sanitizer</li>
+                        <li>Nail clippers</li>
+                        <li>Toothpaste</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Household & Cleaning Supplies</h3>
+            <div class="items-grid">
+                <div class="item-category">
+                    <h4>🧹 Cleaning & Household Items</h4>
+                    <ul>
+                        <li>Toilet paper</li>
+                        <li>Paper towels</li>
+                        <li>Paper bowls and plates</li>
+                        <li>Disposable coffee cups with lids</li>
+                        <li>Kleenex</li>
+                        <li>13 gallon kitchen trash bags (drawstring)</li>
+                        <li>Dishwasher tabs</li>
+                        <li>Liquid dish soap</li>
+                        <li>Laundry detergent (liquid for HE front load)</li>
+                        <li>Color safe bleach</li>
+                        <li>Swiffer Wet Jet pads and liquid</li>
+                        <li>Ziploc bags (various sizes)</li>
+                        <li>Tupperware</li>
+                        <li>Aluminum foil</li>
+                        <li>Plastic wrap</li>
+                    </ul>
+                </div>
+
+                <div class="item-category">
+                    <h4>🎁 Miscellaneous Items</h4>
+                    <ul>
+                        <li>Umbrellas</li>
+                        <li>Inexpensive thermometers</li>
+                        <li>Reading glasses (inexpensive readers, $2.50+)</li>
+                        <li>Large-sized gloves</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>📍 Drop-Off Locations</h2>
+
+            <div class="items-grid">
+                <div class="item-category">
+                    <h4>✅ Alaska Fisher House</h4>
+                    <p><strong>Address:</strong><br>
+                    4943 Zeamer Ave<br>
+                    Joint Base Elmendorf-Richardson (JBER)<br>
+                    Anchorage, AK 99506</p>
+                    <p><strong>Hours:</strong><br>
+                    Monday - Friday<br>
+                    8:00 AM - 4:00 PM</p>
+                </div>
+
+                <div class="item-category">
+                    <h4>✅ 673d Medical Group</h4>
+                    <p>Drop box available at the Lynx entrance of the 673d Medical Group facility.</p>
+                    <p style="margin-top: 1rem;"><strong>Please call in advance to confirm:</strong><br>
+                    <a href="tel:+19072221673" style="color: #2d5a8c; font-weight: bold;">(907) 222-1673</a></p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>📞 Before You Visit:</strong>
+                <p>Please call in advance ((907) 222-1673) to ensure that we are here to receive your donation. This helps us organize your gift and thank you properly!</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2010 - 2026 Alaska Fisher House. All Rights Reserved.</p>
+        <p>Fisher House of Alaska is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status.</p>
+        <p>Site Design by <a href="http://web.geonorth.com/" target="_blank">GeoNorth, LLC</a></p>
+    </footer>
+</body>
+</html>

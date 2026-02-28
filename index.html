@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alaska Fisher House - Home Away From Home for Military Families</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section h1 {
+            font-size: 28px;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .contact-info p {
+            margin: 0.3rem 0;
+        }
+
+        .contact-info strong {
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        nav {
+            background-color: #2d5a8c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav a:hover {
+            background-color: #1e3a5f;
+            border-bottom-color: #ffc107;
+        }
+
+        nav a.active {
+            background-color: #1e3a5f;
+            border-bottom-color: #ffc107;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%231e3a5f" width="1200" height="400"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #2d5a8c;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mission-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .label {
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: inline-block;
+            background-color: #2d5a8c;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 500;
+        }
+
+        .social-links a:hover {
+            background-color: #1e3a5f;
+            transform: translateY(-2px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+
+        .info-card h4 {
+            color: #1e3a5f;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .sponsors {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .sponsor-logo {
+            display: inline-block;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sponsor-logo a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #2d5a8c;
+            transition: color 0.3s;
+        }
+
+        .sponsor-logo a:hover {
+            color: #1e3a5f;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #1e3a5f;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background-color: #ffb300;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: #1e3a5f;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .rating-badge {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav a {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                padding: 0.75rem 1.5rem;
+            }
+
+            nav a:hover, nav a.active {
+                border-left-color: #ffc107;
+                border-bottom: none;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="logo-section">
+                <h1>🏠 Alaska Fisher House</h1>
+                <p>A Home Away From Home for Military Families</p>
+            </div>
+            <div class="contact-info">
+                <strong>Contact Us</strong>
+                <p>Office: <a href="tel:+19072221673" style="color: white; text-decoration: none;">(907) 222-1673</a></p>
+                <p>Emergency: <a href="tel:+19074449009" style="color: white; text-decoration: none;">(907) 444-9009</a></p>
+                <p>Fax: (907) 222-2498</p>
+                <p>Hours: Mon-Fri, 8:00 AM - 4:00 PM</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">HOME</a></li>
+            <li><a href="fisher-house.html">FISHER HOUSE</a></li>
+            <li><a href="immediate-needs.html">IMMEDIATE NEEDS</a></li>
+            <li><a href="immediate-needs.html">HOW YOU CAN HELP</a></li>
+            <li><a href="our-supporters.html">SUPPORTERS</a></li>
+            <li><a href="fisher-house-board-of-directors.html">BOARD</a></li>
+            <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h2>Welcome to Alaska Fisher House</h2>
+        <p>Providing compassionate support and a warm home away from home for service members, veterans, and their families during their time of need in the Anchorage area.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Location Section -->
+        <section id="location">
+            <h2>📍 Location & Hours</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Our Address</h4>
+                    <p>4943 Zeamer Ave.<br>
+                    Joint Base Elmendorf-Richardson<br>
+                    Anchorage, AK 99506</p>
+                </div>
+                <div class="info-card">
+                    <h4>Operating Hours</h4>
+                    <p><strong>Monday - Friday</strong><br>
+                    8:00 AM - 4:00 PM</p>
+                </div>
+                <div class="info-card">
+                    <h4>Contact Information</h4>
+                    <p><strong>Office:</strong> (907) 222-1673<br>
+                    <strong>Emergency:</strong> (907) 444-9009<br>
+                    <strong>Fax:</strong> (907) 222-2498</p>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <a href="contact.html" class="cta-button">Send Email</a>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section id="mission">
+            <h2>🎯 Our Mission</h2>
+            <p>The Alaska Fisher House is a "home away from home" for service members, veterans, and their family members. It provides a warm and compassionate environment for families to heal and support each other while receiving medical care in the Anchorage area.</p>
+            
+            <h3>About Fisher House Foundation</h3>
+            <p>The Fisher House Foundation operates 88 houses across the United States, United Kingdom, and Germany, providing vital support to military families when they need it most.</p>
+
+            <div class="mission-stats">
+                <div class="stat-box">
+                    <div class="number">88</div>
+                    <div class="label">Fisher Houses Worldwide</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">400,000+</div>
+                    <div class="label">Families Served Since 1990</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">$500M+</div>
+                    <div class="label">Money Saved for Families</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">10M+</div>
+                    <div class="label">Nights of Lodging Provided</div>
+                </div>
+            </div>
+
+            <div class="rating-badge">
+                <strong>⭐ Achievement Recognition</strong>
+                <p>The Fisher House Foundation earned an "A+" rating from the American Institute of Philanthropy!</p>
+            </div>
+
+            <p style="margin-top: 1.5rem;">
+                <a href="http://www.fisherhouse.org/" class="cta-button">Learn More at FisherHouse.org</a>
+            </p>
+        </section>
+
+        <!-- Social Media Section -->
+        <section id="connect">
+            <h2>🤝 Connect With Us</h2>
+            <p>Stay updated with news and information by following us on social media:</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/friendsofalaskafisherhouse/" target="_blank">📘 Find Us On Facebook</a>
+                <a href="http://twitter.com/AKFisherHouse" target="_blank">🐦 Follow Us On Twitter</a>
+            </div>
+        </section>
+
+        <!-- Sponsors Section -->
+        <section id="sponsors">
+            <h2>🤲 Proud Partners & Supporters</h2>
+            <p>We are grateful for the support of our sponsors who help us continue our mission:</p>
+            <div class="sponsors">
+                <div class="sponsor-logo">
+                    <a href="http://www.fnbalaska.com/" target="_blank">FNB Alaska</a>
+                </div>
+                <div class="sponsor-logo">
+                    <a href="http://www.geonorth.com/" target="_blank">GeoNorth, LLC</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Links Section -->
+        <section id="quicklinks">
+            <h2>🔗 Quick Links</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Learn More</h4>
+                    <p><a href="fisher-house.html" style="color: #2d5a8c; font-weight: 500;">About Fisher House →</a></p>
+                </div>
+                <div class="info-card">
+                    <h4>Get Involved</h4>
+                    <p><a href="immediate-needs.html" style="color: #2d5a8c; font-weight: 500;">Immediate Needs →</a></p>
+                </div>
+                <div class="info-card">
+                    <h4>Support Us</h4>
+                    <p><a href="our-supporters.html" style="color: #2d5a8c; font-weight: 500;">Our Supporters →</a></p>
+                </div>
+                <div class="info-card">
+                    <h4>Leadership</h4>
+                    <p><a href="fisher-house-board-of-directors.html" style="color: #2d5a8c; font-weight: 500;">Board of Directors →</a></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2010 - 2026 Alaska Fisher House. All Rights Reserved.</p>
+        <p>Fisher House of Alaska is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status.</p>
+        <p>Site Design by <a href="http://web.geonorth.com/" target="_blank">GeoNorth, LLC</a></p>
+    </footer>
+</body>
+</html>
