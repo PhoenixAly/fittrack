@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitTrack — Daily Health & Fitness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #080910;
+  --card:      #10121b;
+  --card2:     #131620;
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(255,255,255,0.11);
+  --text:      #e8eaf2;
+  --muted:     #6b7280;
+  --muted2:    #4b5263;
+  --cal:       #ff6b35;
+  --water:     #06d6f0;
+  --creat:     #c084fc;
+  --work:      #10e87a;
+  --circumf:   276.46;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  padding: 28px 20px 60px;
+  line-height: 1.5;
+}
+
+/* ── HEADER ── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1160px;
+  margin: 0 auto 32px;
+}
+
+.logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 2.1rem;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, var(--cal) 0%, var(--creat) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  user-select: none;
+}
+
+.logo span {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  background: linear-gradient(135deg, var(--cal), var(--creat));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-top: -6px;
+  opacity: 0.7;
+}
+
+.gear-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+.gear-btn:hover { color: var(--text); border-color: var(--border2); background: var(--card2); }
+
+/* ── CONTAINER ── */
+.container { max-width: 1160px; margin: 0 auto; }
+
+/* ── CARDS GRID ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+@media (max-width: 780px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 440px) { .cards-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s cubic-bezier(.4,0,.2,1), box-shadow 0.22s, border-color 0.22s;
+  cursor: default;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: inherit;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.45); border-color: var(--border2); }
+.card:hover::before { opacity: 1; }
+
+.card[data-type="calories"]::before { background: radial-gradient(ellipse at 50% 0%, rgba(255,107,53,0.06) 0%, transparent 70%); }
+.card[data-type="water"]::before    { background: radial-gradient(ellipse at 50% 0%, rgba(6,214,240,0.06) 0%, transparent 70%); }
+.card[data-type="creatine"]::before { background: radial-gradient(ellipse at 50% 0%, rgba(192,132,252,0.06) 0%, transparent 70%); }
+.card[data-type="workouts"]::before { background: radial-gradient(ellipse at 50% 0%, rgba(16,232,122,0.06) 0%, transparent 70%); }
+
+.card-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ── RING ── */
+.ring-wrapper {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  flex-shrink: 0;
+}
+
+.ring-svg {
+  width: 108px;
+  height: 108px;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.055);
+  stroke-width: 8.5;
+}
+
+.ring-track {
+  fill: none;
+  stroke-width: 8.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ring-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+
+.ring-val {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.65rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.ring-unit {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 500;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.done-chip {
+  display: none;
+  background: rgba(16,232,122,0.12);
+  color: var(--work);
+  border: 1px solid rgba(16,232,122,0.25);
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 3px 11px;
+  border-radius: 999px;
+  animation: chipPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.done-chip.show { display: inline-block; }
+
+@keyframes chipPop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.card-goal-label {
+  font-size: 0.68rem;
+  color: var(--muted2);
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── INPUT SECTION ── */
+.input-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px 20px 16px;
+  margin-bottom: 24px;
+}
+
+.input-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.log-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 15px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.88rem;
+  resize: none;
+  height: 82px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  line-height: 1.55;
+}
+.log-textarea::placeholder { color: rgba(107,114,128,0.45); }
+.log-textarea:focus { border-color: rgba(255,255,255,0.14); background: rgba(255,255,255,0.035); }
+
+.input-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 11px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hint-text {
+  font-size: 0.7rem;
+  color: var(--muted2);
+  font-style: italic;
+}
+
+.log-btn {
+  background: linear-gradient(135deg, var(--cal) 0%, #e05fc8 60%, var(--creat) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 26px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.12s;
+  white-space: nowrap;
+}
+.log-btn:hover:not(:disabled) { opacity: 0.88; }
+.log-btn:active:not(:disabled) { transform: scale(0.97); }
+.log-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.status-row {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  min-height: 20px;
+}
+.status-row.visible { display: flex; }
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--creat);
+  flex-shrink: 0;
+  animation: blink 1.3s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.status-txt {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.73rem;
+  color: var(--muted);
+}
+
+/* ── TIMELINE ── */
+.tl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.tl-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.25rem;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+
+.clear-btn {
+  background: rgba(255,107,53,0.08);
+  color: var(--cal);
+  border: 1px solid rgba(255,107,53,0.18);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.73rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s;
+}
+.clear-btn:hover { background: rgba(255,107,53,0.16); border-color: rgba(255,107,53,0.3); }
+
+.timeline { display: flex; flex-direction: column; }
+
+.date-sep {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--muted2);
+  padding: 18px 0 8px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+.date-sep:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+
+.entry {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 44px 13px 15px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  position: relative;
+  margin-bottom: 6px;
+  transition: border-color 0.18s, background 0.18s;
+  animation: slideIn 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.entry:hover { border-color: var(--border2); background: var(--card2); }
+.entry:hover .del-btn { opacity: 1; }
+
+.entry-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  width: 30px;
+  text-align: center;
+  line-height: 1;
+}
+
+.entry-body { flex: 1; min-width: 0; }
+
+.entry-desc {
+  font-size: 0.875rem;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.badges { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.b-cal   { background: rgba(255,107,53,0.12); color: var(--cal); }
+.b-prot  { background: rgba(255,160,80,0.10); color: #ffaa70; }
+.b-water { background: rgba(6,214,240,0.12);  color: var(--water); }
+.b-creat { background: rgba(192,132,252,0.12); color: var(--creat); }
+.b-exer  { background: rgba(16,232,122,0.12); color: var(--work); }
+
+.entry-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted2);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.del-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: rgba(255,107,53,0.12);
+  border: none;
+  color: var(--cal);
+  cursor: pointer;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.18s, background 0.18s;
+  line-height: 1;
+}
+.del-btn:hover { background: rgba(255,107,53,0.25); }
+
+.empty-state {
+  text-align: center;
+  padding: 52px 0;
+  color: var(--muted2);
+}
+.empty-state .ei { font-size: 2.8rem; margin-bottom: 12px; }
+.empty-state p { font-size: 0.85rem; }
+
+/* ── MODALS ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 10, 0.8);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+  transition: opacity 0.2s;
+}
+.overlay.hidden { display: none; }
+
+.modal {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 22px;
+  padding: 36px 32px 30px;
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  animation: modalIn 0.25s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.92) translateY(16px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+
+.modal-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.8rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--text) 40%, var(--muted) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.55;
+}
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.field input {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.field input::placeholder { color: rgba(107,114,128,0.45); }
+.field input:focus { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.06); }
+
+.modal-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--cal) 0%, #d060d0 55%, var(--creat) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  padding: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: opacity 0.18s;
+  margin-top: 8px;
+}
+.modal-btn:hover { opacity: 0.88; }
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.change-key {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.73rem;
+  color: var(--muted2);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.change-key:hover { color: var(--muted); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(90px);
+  background: rgba(20, 10, 8, 0.95);
+  border: 1px solid rgba(255,107,53,0.28);
+  color: var(--cal);
+  padding: 12px 26px;
+  border-radius: 11px;
+  font-size: 0.83rem;
+  z-index: 500;
+  transition: transform 0.3s cubic-bezier(0.34, 1.25, 0.64, 1);
+  white-space: nowrap;
+  max-width: calc(100vw - 40px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toast.up { transform: translateX(-50%) translateY(0); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+</style>
+</head>
+<body>
+
+<!-- ══ API KEY MODAL ══ -->
+<div id="apiModal" class="overlay">
+  <div class="modal">
+    <div class="modal-title">Welcome to FitTrack</div>
+    <div class="modal-sub">
+      Enter your Anthropic API key to enable AI-powered natural language logging.
+      Your key is stored only in your browser and sent exclusively to the Anthropic API.
+    </div>
+    <div class="field">
+      <label for="apiKeyIn">Anthropic API Key</label>
+      <input type="password" id="apiKeyIn" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
+      <div id="apiKeyErr" style="color:#ff6b35;font-size:0.75rem;margin-top:6px;min-height:18px;"></div>
+    </div>
+    <button class="modal-btn" onclick="saveApiKey()">Get Started →</button>
+  </div>
+</div>
+
+<!-- ══ SETTINGS MODAL ══ -->
+<div id="settingsModal" class="overlay hidden">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSettings()">✕</button>
+    <div class="modal-title">Settings</div>
+    <div class="modal-sub">Adjust your daily targets</div>
+    <div class="settings-grid">
+      <div class="field">
+        <label>🔥 Calories (kcal)</label>
+        <input type="number" id="gCal" min="0" step="50">
+      </div>
+      <div class="field">
+        <label>💧 Water (oz)</label>
+        <input type="number" id="gWater" min="0" step="5">
+      </div>
+      <div class="field">
+        <label>💊 Creatine (g)</label>
+        <input type="number" id="gCreat" min="0" step="1">
+      </div>
+      <div class="field">
+        <label>💪 Workouts / day</label>
+        <input type="number" id="gWork" min="0" step="1">
+      </div>
+    </div>
+    <button class="modal-btn" onclick="saveSettings()">Save Goals</button>
+    <span class="change-key" onclick="promptApiKey()">Change API Key</span>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div id="toast" class="toast"></div>
+
+<!-- ══ APP ══ -->
+<header>
+  <div class="logo">FitTrack<span>Daily Health Tracker</span></div>
+  <button class="gear-btn" onclick="openSettings()" title="Settings">⚙</button>
+</header>
+
+<div class="container">
+
+  <!-- SUMMARY CARDS -->
+  <div class="cards-grid">
+
+    <!-- Calories -->
+    <div class="card" data-type="calories">
+      <div class="card-title">🔥 Calories</div>
+      <div class="ring-wrapper">
+        <svg class="ring-svg" viewBox="0 0 108 108">
+          <circle class="ring-bg"    cx="54" cy="54" r="44"/>
+          <circle class="ring-track" id="rCal" cx="54" cy="54" r="44"
+            stroke="var(--cal)"
+            stroke-dasharray="276.46"
+            stroke-dashoffset="276.46"/>
+        </svg>
+        <div class="ring-inner">
+          <div class="ring-val" id="vCal" style="color:var(--cal)">0</div>
+          <div class="ring-unit">kcal</div>
+        </div>
+      </div>
+      <div class="done-chip" id="dCal">✓ DONE</div>
+      <div class="card-goal-label" id="glCal">Goal: 2500 kcal</div>
+    </div>
+
+    <!-- Water -->
+    <div class="card" data-type="water">
+      <div class="card-title">💧 Water</div>
+      <div class="ring-wrapper">
+        <svg class="ring-svg" viewBox="0 0 108 108">
+          <circle class="ring-bg"    cx="54" cy="54" r="44"/>
+          <circle class="ring-track" id="rWater" cx="54" cy="54" r="44"
+            stroke="var(--water)"
+            stroke-dasharray="276.46"
+            stroke-dashoffset="276.46"/>
+        </svg>
+        <div class="ring-inner">
+          <div class="ring-val" id="vWater" style="color:var(--water)">0</div>
+          <div class="ring-unit">oz</div>
+        </div>
+      </div>
+      <div class="done-chip" id="dWater">✓ DONE</div>
+      <div class="card-goal-label" id="glWater">Goal: 100 oz</div>
+    </div>
+
+    <!-- Creatine -->
+    <div class="card" data-type="creatine">
+      <div class="card-title">💊 Creatine</div>
+      <div class="ring-wrapper">
+        <svg class="ring-svg" viewBox="0 0 108 108">
+          <circle class="ring-bg"    cx="54" cy="54" r="44"/>
+          <circle class="ring-track" id="rCreat" cx="54" cy="54" r="44"
+            stroke="var(--creat)"
+            stroke-dasharray="276.46"
+            stroke-dashoffset="276.46"/>
+        </svg>
+        <div class="ring-inner">
+          <div class="ring-val" id="vCreat" style="color:var(--creat)">0</div>
+          <div class="ring-unit">g</div>
+        </div>
+      </div>
+      <div class="done-chip" id="dCreat">✓ DONE</div>
+      <div class="card-goal-label" id="glCreat">Goal: 5g</div>
+    </div>
+
+    <!-- Workouts -->
+    <div class="card" data-type="workouts">
+      <div class="card-title">💪 Workouts</div>
+      <div class="ring-wrapper">
+        <svg class="ring-svg" viewBox="0 0 108 108">
+          <circle class="ring-bg"    cx="54" cy="54" r="44"/>
+          <circle class="ring-track" id="rWork" cx="54" cy="54" r="44"
+            stroke="var(--work)"
+            stroke-dasharray="276.46"
+            stroke-dashoffset="276.46"/>
+        </svg>
+        <div class="ring-inner">
+          <div class="ring-val" id="vWork" style="color:var(--work)">0</div>
+          <div class="ring-unit">sessions</div>
+        </div>
+      </div>
+      <div class="done-chip" id="dWork">✓ DONE</div>
+      <div class="card-goal-label" id="glWork">Goal: 1 session</div>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+  <!-- INPUT -->
+  <div class="input-section">
+    <div class="input-label">Log an Entry</div>
+    <textarea id="logInput" class="log-textarea"
+      placeholder="had grilled chicken and rice for lunch around 1pm… drank 32oz of water… ran 5 miles this morning at 7… took my creatine…"></textarea>
+    <div class="input-footer">
+      <span class="hint-text">Claude parses anything — just type naturally</span>
+      <button class="log-btn" id="logBtn" onclick="handleLog()">Log Entry</button>
+    </div>
+    <div class="status-row" id="statusRow">
+      <div class="status-dot"></div>
+      <span class="status-txt" id="statusTxt">Parsing with Claude…</span>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="tl-header">
+    <div class="tl-title">Activity Log</div>
+    <button class="clear-btn" onclick="clearToday()">Clear today</button>
+  </div>
+  <div class="timeline" id="timeline">
+    <div class="empty-state">
+      <div class="ei">📋</div>
+      <p>No entries yet — log your first activity above.</p>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ══════════════════════════════════════════════
+//  CONSTANTS & STATE
+// ══════════════════════════════════════════════
+const SK_ENTRIES = 'fittrack_entries';
+const SK_GOALS   = 'fittrack_goals';
+const SK_KEY     = 'fittrack_api_key';
+const C          = 2 * Math.PI * 44; // circumference ≈ 276.46
+
+const DEFAULT_GOALS = { calories: 2500, water: 100, creatine: 5, workouts: 1 };
+
+let entries = [];
+let goals   = { ...DEFAULT_GOALS };
+
+// In-memory fallback when localStorage is blocked (file://, OneDrive, etc.)
+let _memKey     = null;
+let _memEntries = null;
+let _memGoals   = null;
+
+function lsGet(key) {
+  try { return localStorage.getItem(key); } catch { return null; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem(key, val); } catch { /* blocked — use memory */ }
+}
+
+function getApiKey()  { return lsGet(SK_KEY)  || _memKey; }
+function saveKey(v)   { lsSet(SK_KEY, v); _memKey = v; }
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+function init() {
+  try { entries = JSON.parse(lsGet(SK_ENTRIES) || '[]'); } catch { entries = []; }
+  try { goals   = { ...DEFAULT_GOALS, ...JSON.parse(lsGet(SK_GOALS) || '{}') }; } catch { goals = { ...DEFAULT_GOALS }; }
+
+  if (!getApiKey()) {
+    document.getElementById('apiModal').classList.remove('hidden');
+  } else {
+    document.getElementById('apiModal').classList.add('hidden');
+  }
+
+  render();
+
+  document.getElementById('logInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleLog(); }
+  });
+
+  // Close settings overlay on backdrop click
+  document.getElementById('settingsModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeSettings();
+  });
+}
+
+// ══════════════════════════════════════════════
+//  API KEY
+// ══════════════════════════════════════════════
+function saveApiKey() {
+  const input = document.getElementById('apiKeyIn');
+  const errEl = document.getElementById('apiKeyErr');
+  const v = input.value.trim();
+
+  errEl.textContent = '';
+  input.style.borderColor = '';
+
+  if (!v) {
+    errEl.textContent = 'Please paste your Anthropic API key above.';
+    input.style.borderColor = 'rgba(255,107,53,0.6)';
+    input.focus();
+    return;
+  }
+
+  // Save key — lsSet handles SecurityError silently; _memKey is the fallback
+  saveKey(v);
+
+  // Always close the modal regardless of localStorage success
+  document.getElementById('apiModal').classList.add('hidden');
+}
+
+function promptApiKey() {
+  closeSettings();
+  document.getElementById('apiKeyIn').value = '';
+  document.getElementById('apiKeyErr').textContent = '';
+  document.getElementById('apiKeyIn').style.borderColor = '';
+  document.getElementById('apiModal').classList.remove('hidden');
+}
+
+// ══════════════════════════════════════════════
+//  SETTINGS
+// ══════════════════════════════════════════════
+function openSettings() {
+  document.getElementById('gCal').value   = goals.calories;
+  document.getElementById('gWater').value = goals.water;
+  document.getElementById('gCreat').value = goals.creatine;
+  document.getElementById('gWork').value  = goals.workouts;
+  document.getElementById('settingsModal').classList.remove('hidden');
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.add('hidden');
+}
+
+function saveSettings() {
+  goals = {
+    calories: parseFloat(document.getElementById('gCal').value)   || DEFAULT_GOALS.calories,
+    water:    parseFloat(document.getElementById('gWater').value) || DEFAULT_GOALS.water,
+    creatine: parseFloat(document.getElementById('gCreat').value) || DEFAULT_GOALS.creatine,
+    workouts: parseFloat(document.getElementById('gWork').value)  || DEFAULT_GOALS.workouts,
+  };
+  lsSet(SK_GOALS, JSON.stringify(goals));
+  closeSettings();
+  render();
+}
+
+// ══════════════════════════════════════════════
+//  LOGGING
+// ══════════════════════════════════════════════
+async function handleLog() {
+  const raw = document.getElementById('logInput').value.trim();
+  if (!raw) return;
+
+  const apiKey = getApiKey();
+  if (!apiKey) { document.getElementById('apiModal').classList.remove('hidden'); return; }
+
+  const btn = document.getElementById('logBtn');
+  const statusRow = document.getElementById('statusRow');
+  btn.disabled = true;
+  btn.textContent = 'Parsing…';
+  statusRow.classList.add('visible');
+  setStatus('Sending to Claude…');
+
+  try {
+    const now = new Date();
+    const hhmm = now.toTimeString().slice(0, 5);
+    const parsed = await parseWithClaude(raw, hhmm, apiKey);
+
+    // Build timestamp from time_override or now
+    let ts;
+    if (parsed.time_override && /^\d{1,2}:\d{2}$/.test(parsed.time_override)) {
+      const [h, m] = parsed.time_override.split(':').map(Number);
+      ts = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0).toISOString();
+    } else {
+      ts = now.toISOString();
+    }
+
+    const entry = {
+      id:          Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      type:        parsed.type || 'unknown',
+      description: (parsed.description || raw).slice(0, 80),
+      calories:    Number(parsed.calories)       || 0,
+      protein_g:   Number(parsed.protein_g)      || 0,
+      water_oz:    Number(parsed.water_oz)        || 0,
+      creatine_g:  Number(parsed.creatine_g)      || 0,
+      exercise_name:     parsed.exercise_name     || null,
+      duration_minutes:  Number(parsed.duration_minutes) || 0,
+      raw,
+      timestamp:   ts,
+    };
+
+    entries.unshift(entry);
+    persist();
+    document.getElementById('logInput').value = '';
+    setStatus('Entry logged ✓');
+    setTimeout(() => statusRow.classList.remove('visible'), 1600);
+    render();
+  } catch (err) {
+    statusRow.classList.remove('visible');
+    showToast(err.message || 'Something went wrong. Check your API key.');
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Log Entry';
+  }
+}
+
+async function parseWithClaude(text, currentTime, apiKey) {
+  const system = `You are a health log parser. Parse the user's natural language entry into structured JSON.
+
+Rules:
+- type: "food" | "water" | "exercise" | "creatine" | "unknown"
+- calories: estimated number (0 if not food / not applicable)
+- protein_g: estimated grams protein (0 if not applicable)
+- water_oz: ounces of water consumed (convert any unit; 0 if not applicable). 1 cup=8oz, 1L≈33.8oz, 1 bottle typically=16-20oz
+- creatine_g: grams of creatine (use 5 if they mention creatine but no amount; 0 if not applicable)
+- exercise_name: name of the exercise/activity (null if not applicable)
+- duration_minutes: exercise duration in minutes (0 if not stated or not applicable)
+- time_override: if user states a time ("at 2pm", "this morning at 8", "around 1", "an hour ago", "at noon"), convert to HH:MM in 24-hour format. For "an hour ago" subtract 1 hour from current time. Otherwise null.
+- description: friendly short summary, max 65 characters
+
+Return ONLY valid JSON. No markdown fences, no commentary.
+
+Example input: "had chicken and rice for lunch around 1pm"
+Example output: {"type":"food","calories":480,"protein_g":38,"water_oz":0,"creatine_g":0,"exercise_name":null,"duration_minutes":0,"time_override":"13:00","description":"Chicken and rice for lunch"}`;
+
+  const userMsg = `Current time: ${currentTime}
+Entry: "${text}"`;
+
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-5',
+      max_tokens: 400,
+      system,
+      messages: [{ role: 'user', content: userMsg }],
+    }),
+  });
+
+  if (!resp.ok) {
+    let msg = `API error ${resp.status}`;
+    try { const e = await resp.json(); msg = e?.error?.message || msg; } catch {}
+    throw new Error(msg);
+  }
+
+  const data = await resp.json();
+  const raw = (data.content?.[0]?.text || '').trim();
+  // Strip accidental markdown fences
+  const clean = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+
+  try {
+    return JSON.parse(clean);
+  } catch {
+    throw new Error('Claude returned unexpected output — please try again.');
+  }
+}
+
+function setStatus(msg) {
+  document.getElementById('statusTxt').textContent = msg;
+}
+
+// ══════════════════════════════════════════════
+//  PERSISTENCE
+// ══════════════════════════════════════════════
+function persist() {
+  lsSet(SK_ENTRIES, JSON.stringify(entries));
+}
+
+// ══════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════
+function render() {
+  renderCards();
+  renderTimeline();
+}
+
+function todayEntries() {
+  const d = new Date().toDateString();
+  return entries.filter(e => new Date(e.timestamp).toDateString() === d);
+}
+
+function renderCards() {
+  const today = todayEntries();
+  const totals = {
+    calories: today.reduce((s, e) => s + (e.calories || 0), 0),
+    water:    today.reduce((s, e) => s + (e.water_oz || 0), 0),
+    creatine: today.reduce((s, e) => s + (e.creatine_g || 0), 0),
+    workouts: today.filter(e => e.type === 'exercise').length,
+  };
+
+  setRing('Cal',   totals.calories, goals.calories, fmtNum(totals.calories, 'cal'), 'kcal');
+  setRing('Water', totals.water,    goals.water,    fmtNum(totals.water, 'oz'),    'oz');
+  setRing('Creat', totals.creatine, goals.creatine, fmtNum(totals.creatine, 'g'),  'g');
+  setRing('Work',  totals.workouts, goals.workouts, String(totals.workouts),        'sessions');
+
+  document.getElementById('glCal').textContent   = `Goal: ${goals.calories} kcal`;
+  document.getElementById('glWater').textContent = `Goal: ${goals.water} oz`;
+  document.getElementById('glCreat').textContent = `Goal: ${goals.creatine}g`;
+  document.getElementById('glWork').textContent  = `Goal: ${goals.workouts} session${goals.workouts !== 1 ? 's' : ''}`;
+}
+
+function setRing(id, value, goal, displayVal, unit) {
+  const pct    = goal > 0 ? Math.min(value / goal, 1) : 0;
+  const offset = C * (1 - pct);
+
+  document.getElementById('r' + id).style.strokeDashoffset = offset;
+  document.getElementById('v' + id).textContent = displayVal;
+
+  const chip = document.getElementById('d' + id);
+  if (pct >= 1) { chip.classList.add('show'); }
+  else          { chip.classList.remove('show'); }
+}
+
+function fmtNum(n, type) {
+  if (type === 'cal' && n >= 1000) return (Math.round(n / 100) / 10) + 'k';
+  if (type === 'oz')  return String(Math.round(n * 10) / 10);
+  if (type === 'g')   return String(Math.round(n * 10) / 10);
+  return String(Math.round(n));
+}
+
+function renderTimeline() {
+  const tl = document.getElementById('timeline');
+
+  if (!entries.length) {
+    tl.innerHTML = `<div class="empty-state"><div class="ei">📋</div><p>No entries yet — log your first activity above.</p></div>`;
+    return;
+  }
+
+  const sorted = [...entries].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const groups = new Map();
+  for (const e of sorted) {
+    const dk = new Date(e.timestamp).toDateString();
+    if (!groups.has(dk)) groups.set(dk, []);
+    groups.get(dk).push(e);
+  }
+
+  const today     = new Date().toDateString();
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+
+  let html = '';
+  for (const [dk, dayEntries] of groups) {
+    let label;
+    if (dk === today)          label = 'Today';
+    else if (dk === yesterday) label = 'Yesterday';
+    else                       label = new Date(dk).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+
+    html += `<div class="date-sep">${esc(label)}</div>`;
+    for (const e of dayEntries) html += entryHtml(e);
+  }
+
+  tl.innerHTML = html;
+}
+
+function entryHtml(e) {
+  const icon = { food:'🍽️', water:'💧', exercise:'🏃', creatine:'💊' }[e.type] || '📝';
+  const time = fmtTime(e.timestamp);
+
+  let badges = '';
+  if (e.calories > 0)         badges += `<span class="badge b-cal">${Math.round(e.calories)} kcal</span>`;
+  if (e.protein_g > 0)        badges += `<span class="badge b-prot">${Math.round(e.protein_g)}g protein</span>`;
+  if (e.water_oz > 0)         badges += `<span class="badge b-water">${Math.round(e.water_oz * 10) / 10} oz</span>`;
+  if (e.creatine_g > 0)       badges += `<span class="badge b-creat">${e.creatine_g}g creatine</span>`;
+  if (e.exercise_name)        badges += `<span class="badge b-exer">${esc(e.exercise_name)}</span>`;
+  if (e.duration_minutes > 0) badges += `<span class="badge b-exer">${e.duration_minutes} min</span>`;
+
+  return `<div class="entry" id="e-${esc(e.id)}">
+    <div class="entry-icon">${icon}</div>
+    <div class="entry-body">
+      <div class="entry-desc">${esc(e.description)}</div>
+      <div class="badges">${badges}</div>
+    </div>
+    <div class="entry-time">${time}</div>
+    <button class="del-btn" onclick="deleteEntry('${esc(e.id)}')" title="Delete">×</button>
+  </div>`;
+}
+
+function fmtTime(iso) {
+  const d = new Date(iso);
+  let h = d.getHours(), m = d.getMinutes();
+  const ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return `${h}:${String(m).padStart(2,'0')} ${ap}`;
+}
+
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ══════════════════════════════════════════════
+//  ACTIONS
+// ══════════════════════════════════════════════
+function deleteEntry(id) {
+  const el = document.getElementById('e-' + id);
+  if (el) {
+    el.style.transition = 'opacity 0.2s, transform 0.2s';
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(16px)';
+  }
+  setTimeout(() => {
+    entries = entries.filter(e => e.id !== id);
+    persist();
+    render();
+  }, 210);
+}
+
+function clearToday() {
+  const count = todayEntries().length;
+  if (!count) { showToast('No entries today to clear.'); return; }
+  if (!confirm(`Clear all ${count} entr${count === 1 ? 'y' : 'ies'} from today?`)) return;
+  const today = new Date().toDateString();
+  entries = entries.filter(e => new Date(e.timestamp).toDateString() !== today);
+  persist();
+  render();
+}
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg, ms = 3600) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('up');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('up'), ms);
+}
+
+// ══════════════════════════════════════════════
+//  START
+// ══════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
