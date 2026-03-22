@@ -186,20 +186,24 @@ header {
   gap: 3px;
 }
 .cal-day {
-  aspect-ratio: 1; border-radius: 4px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.04);
+  aspect-ratio: 1; border-radius: 5px;
   cursor: default; position: relative;
   transition: transform 0.12s;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5px;
+  background: rgba(255,255,255,0.07);
+  overflow: hidden;
 }
-.cal-day:hover { transform: scale(1.2); z-index: 5; }
-.cal-day[data-has="1"][data-intensity="0"] { background: rgba(255,255,255,0.09); }
-.cal-day[data-intensity="1"] { background: rgba(16,232,122,0.2);  border-color: rgba(16,232,122,0.2); }
-.cal-day[data-intensity="2"] { background: rgba(16,232,122,0.42); border-color: rgba(16,232,122,0.3); }
-.cal-day[data-intensity="3"] { background: rgba(16,232,122,0.67); border-color: rgba(16,232,122,0.45); }
-.cal-day[data-intensity="4"] { background: rgba(16,232,122,0.92); border-color: rgba(16,232,122,0.65); }
+.cal-day:hover { transform: scale(1.25); z-index: 5; }
 .cal-day.cal-today  { outline: 2px solid var(--creat); outline-offset: 1px; }
-.cal-day.cal-future { opacity: 0.25; pointer-events: none; }
+.cal-day.cal-future { opacity: 0.2; pointer-events: none; }
+.cal-q { background: rgba(255,255,255,0.04); }
+.cal-q.hit-cal   { background: rgba(255,107,53,0.82); }
+.cal-q.hit-water { background: rgba(6,214,240,0.82); }
+.cal-q.hit-creat { background: rgba(192,132,252,0.82); }
+.cal-q.hit-work  { background: rgba(16,232,122,0.82); }
 .cal-legend {
   display: flex; align-items: center; gap: 10px;
   margin-top: 10px; flex-wrap: wrap;
@@ -435,6 +439,21 @@ header {
 
 <div class="container">
 
+  <!-- INPUT -->
+  <div class="input-section">
+    <div class="input-label">Log an Entry</div>
+    <textarea id="logInput" class="log-textarea"
+      placeholder="had oatmeal and eggs at marketplace… drank 32oz of water… ran 3 miles this morning at 7… took my creatine…"></textarea>
+    <div class="input-footer">
+      <span class="hint-text">Claude parses anything — just type naturally</span>
+      <button class="log-btn" id="logBtn" onclick="handleLog()">Log Entry</button>
+    </div>
+    <div class="status-row" id="statusRow">
+      <div class="status-dot"></div>
+      <span class="status-txt" id="statusTxt">Parsing with Claude…</span>
+    </div>
+  </div>
+
   <!-- SUMMARY CARDS -->
   <div class="cards-grid">
     <div class="card" data-type="calories">
@@ -521,28 +540,12 @@ header {
         </div>
         <div class="cal-grid" id="calGrid"></div>
         <div class="cal-legend">
-          <span class="leg-item"><span class="leg-sq" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.08)"></span>No log</span>
-          <span class="leg-item"><span class="leg-sq" style="background:rgba(16,232,122,0.2)"></span>1 goal</span>
-          <span class="leg-item"><span class="leg-sq" style="background:rgba(16,232,122,0.42)"></span>2 goals</span>
-          <span class="leg-item"><span class="leg-sq" style="background:rgba(16,232,122,0.67)"></span>3 goals</span>
-          <span class="leg-item"><span class="leg-sq" style="background:rgba(16,232,122,0.92)"></span>All ✓</span>
+          <span class="leg-item"><span class="leg-sq" style="background:rgba(255,107,53,0.82)"></span>🔥 Calories</span>
+          <span class="leg-item"><span class="leg-sq" style="background:rgba(6,214,240,0.82)"></span>💧 Water</span>
+          <span class="leg-item"><span class="leg-sq" style="background:rgba(192,132,252,0.82)"></span>💊 Creatine</span>
+          <span class="leg-item"><span class="leg-sq" style="background:rgba(16,232,122,0.82)"></span>💪 Workout</span>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- INPUT -->
-  <div class="input-section">
-    <div class="input-label">Log an Entry</div>
-    <textarea id="logInput" class="log-textarea"
-      placeholder="had oatmeal and eggs at marketplace… drank 32oz of water… ran 3 miles this morning at 7… took my creatine…"></textarea>
-    <div class="input-footer">
-      <span class="hint-text">Claude parses anything — just type naturally</span>
-      <button class="log-btn" id="logBtn" onclick="handleLog()">Log Entry</button>
-    </div>
-    <div class="status-row" id="statusRow">
-      <div class="status-dot"></div>
-      <span class="status-txt" id="statusTxt">Parsing with Claude…</span>
     </div>
   </div>
 
@@ -1069,16 +1072,23 @@ function renderCalendar() {
     const key     = d.toDateString();
     const isToday = key === todayMidnight.toDateString();
     const isFuture= d > today;
-    const dayData = dayMap[key] || { goalsHit: 0, hasEntry: false };
-    const label   = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    const tip     = dayData.hasEntry
-      ? `${label}: ${dayData.goalsHit}/4 goals hit`
+    const dayData  = dayMap[key] || { goalsHit: 0, hasEntry: false, cal: 0, water: 0, creat: 0, work: 0 };
+    const active   = dayData.hasEntry && !isFuture;
+    const calHit   = active && dayData.cal   >= goals.calories;
+    const waterHit = active && dayData.water >= goals.water;
+    const creatHit = active && dayData.creat >= goals.creatine;
+    const workHit  = active && dayData.work  >= goals.workouts;
+    const label    = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const tip      = dayData.hasEntry && !isFuture
+      ? `${label} · ${dayData.goalsHit}/4 goals  🔥${calHit?'✓':'✗'} 💧${waterHit?'✓':'✗'} 💊${creatHit?'✓':'✗'} 💪${workHit?'✓':'✗'}`
       : `${label}: No entries`;
 
-    html += `<div class="cal-day${isToday ? ' cal-today' : ''}${isFuture ? ' cal-future' : ''}"
-      data-intensity="${isFuture ? 0 : dayData.goalsHit}"
-      data-has="${dayData.hasEntry ? 1 : 0}"
-      title="${tip}"></div>`;
+    html += `<div class="cal-day${isToday ? ' cal-today' : ''}${isFuture ? ' cal-future' : ''}" title="${tip}">
+      <div class="cal-q${calHit   ? ' hit-cal'   : ''}"></div>
+      <div class="cal-q${waterHit ? ' hit-water' : ''}"></div>
+      <div class="cal-q${creatHit ? ' hit-creat' : ''}"></div>
+      <div class="cal-q${workHit  ? ' hit-work'  : ''}"></div>
+    </div>`;
   }
   document.getElementById('calGrid').innerHTML = html;
 }
